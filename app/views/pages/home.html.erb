@@ -1,0 +1,12 @@
+<h1>Pages Importer</h1>
+
+<%= render "people/import_form" %>
+
+<% @people.each do |person| %>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title"><%= person.name %></h5>
+      <h6 class="card-subtitle mb-2 text-muted"><%= person.age %></h6>
+    </div>
+  </div>
+<% end %>
