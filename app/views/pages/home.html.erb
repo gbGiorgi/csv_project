@@ -1,5 +1,3 @@
-<h1>People Importer</h1>
-
 <%= render "people/import_form" %>
 
 <% @people.each do |person| %>
@@ -10,3 +8,7 @@
     </div>
   </div>
 <% end %>
+
+<div class="pagination justify-content-center">
+  <%= will_paginate @people %>
+</div>
