@@ -1,7 +1,6 @@
 <%= form_with url: import_people_path, method: :post do |f| %>
   <div class="container">
     <div class="d-flex justify-content-end">
-      <%= link_to "Logout", destroy_user_session_path, method: :delete %>
       <% if Person.any? %>
         <div class="btn-group">
           <%= link_to "Clear People", clear_people_path, class: "btn btn-danger",
