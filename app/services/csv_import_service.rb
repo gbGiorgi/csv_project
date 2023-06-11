@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CsvImportService
   require 'csv'
 
@@ -15,9 +17,7 @@ class CsvImportService
       if headers.nil?
         headers = row.headers
         # Check if headers match the expected parameters
-        unless headers == ['id', 'name', 'age']
-          raise StandardError, 'Your CSV file doesn\'t have correct parameters'
-        end
+        raise StandardError, 'Your CSV file doesn\'t have correct parameters' unless headers == %w[id name age]
       end
 
       id = row['id']
