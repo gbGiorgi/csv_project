@@ -9,12 +9,16 @@ class PeopleController < ApplicationController
     return redirect_to root_path, alert: 'Please select CSV file instead' unless file.content_type == 'text/csv'
 
     # import data
-    csvImportService = CsvImportService.new(file)
-    csvImportService.import
+    begin
+      csvImportService = CsvImportService.new(file)
+      csvImportService.import
 
-    # redirect with notice
-    redirect_to root_path,
-    notice: "#{csvImportService.number_imported_with_last_run} people imported"
+      # redirect with notice
+      redirect_to root_path,
+        notice: "#{csvImportService.number_imported_with_last_run} people imported"
+    rescue StandardError => e
+      redirect_to root_path, alert: e.message
+    end
   end
 
   def clear
