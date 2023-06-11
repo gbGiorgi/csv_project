@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: csv_project_development
+  username: giorguna
+
+test:
+  <<: *default
+  database: csv_project_test
+  username: giorguna
+
+production:
+  <<: *default
+  database: csv_project_production
+  username: giorguna
+  host: your_postgres_host
+  port: your_postgres_port

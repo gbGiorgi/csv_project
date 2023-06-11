@@ -1,0 +1,91 @@
+<h4>Upload CSV Files</h4>
+<div class="header">
+  <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "logout-link" %>
+</div>
+
+<%= render "people/import_form" %>
+
+<% if Person.any? %>
+  <div class="sort-links">
+    <strong>Sort by:</strong>
+    <% sorting_options = [
+      { name: "ID", sort_param: "id" },
+      { name: "Name", sort_param: "name" },
+      { name: "Age", sort_param: "age" }
+    ] %>
+    <% sorting_options.each do |option| %>
+      <%= link_to option[:name], root_path(sort: option[:sort_param],
+        name_filter: params[:name_filter], age_filter: params[:age_filter]) %>
+    <% end %>
+  </div>
+  <br><br>
+
+  <%= form_tag root_path, method: :get, class: "filter-form" do %>
+    <div class="form-row">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <%= label_tag :name_filter, "Filter by Name:" %>
+            <%= text_field_tag :name_filter, params[:name_filter], class: "form-control form-control-sm" %>
+          </div>
+        </div>
+      <div class="col-md-2">
+    <div class="form-group">
+      <%= label_tag :age_filter, "Filter by Age:" %>
+      <%= text_field_tag :age_filter, params[:age_filter], class: "form-control form-control-sm ml-0" %>
+    </div>
+  </div>
+</div>
+
+    </div><br>
+    <%= submit_tag "Filter", class: "btn btn-primary btn-sm" %>
+    <%= button_tag "Clear Filters", type: :button, class: "btn btn-secondary btn-sm", onclick: "clearFilters()" %>
+  <% end %>
+  <br>
+<% end %>
+
+<% @people.each do |person| %>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title"><%= person.name %></h5>
+      <h6 class="card-subtitle mb-2 text-muted"><%= person.age %></h6>
+    </div>
+  </div>
+<% end %>
+
+<div class="pagination justify-content-center">
+  <%= will_paginate @people %>
+</div>
+
+<style>
+  .header {
+    text-align: right;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+  }
+
+  .logout-link {
+    color: red;
+  }
+
+  .sort-links {
+    margin-bottom: 10px;
+  }
+
+  .filter-form .form-control {
+    width: 150px;
+  }
+
+  body {
+  overflow-x: hidden;
+}
+</style>
+
+<script>
+  function clearFilters() {
+    document.getElementById("name_filter").value = "";
+    document.getElementById("age_filter").value = "";
+    document.querySelector(".filter-form").submit();
+  }
+</script>
